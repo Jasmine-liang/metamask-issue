@@ -96,23 +96,20 @@ const Steps: React.FC<StepsProps> = ({ setResultStatus }) => {
   } = useSignMessage();
 
   // Check if address is already claimed
-  const { data: isAddressClaimed } = useContractRead(
-    {
-      addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
-      contractInterface: fairdropABI,
+  const { data: isAddressClaimed } = useContractRead({
+    addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
+    contractInterface: fairdropABI,
     functionName: "addressClaimed",
-    args: account
-  }
-  );
+    args: account,
+  });
 
   // Check if userId (Twitter account) is already claimed
-  const { data: isUserIdClaimed } = useContractRead(
-    {
-      addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
-      contractInterface: fairdropABI,
-      functionName:"userIdClaimed",
-     args: claimData?.userId }
-  );
+  const { data: isUserIdClaimed } = useContractRead({
+    addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
+    contractInterface: fairdropABI,
+    functionName: "userIdClaimed",
+    args: claimData?.userId,
+  });
 
   // Claim fairdrop
   const {
@@ -121,12 +118,11 @@ const Steps: React.FC<StepsProps> = ({ setResultStatus }) => {
     // isSuccess: claimSuccess,
     isLoading: claimLoading,
     write,
-  } = useContractWrite(
-    {
-      addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
-      contractInterface: fairdropABI, 
-      functionName:"claim"}
-  );
+  } = useContractWrite({
+    addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
+    contractInterface: fairdropABI,
+    functionName: "claim",
+  });
 
   // wait claimging transaction
   const { isLoading: isWaitingTx } = useWaitForTransaction({

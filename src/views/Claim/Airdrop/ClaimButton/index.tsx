@@ -36,13 +36,12 @@ const ClaimButton: React.FC<ClaimButtonProps> = ({
     isLoading,
     refetch,
   } = useContractRead({
-    
     addressOrName: process.env.NEXT_PUBLIC_CONTRACT_CLAIM || "",
     contractInterface: claimAirdropABI,
-    functionName:"hasClaimed",
-    enabled: false, 
-    args: [account] }
-  );
+    functionName: "hasClaimed",
+    enabled: false,
+    args: [account],
+  });
 
   // claim from contract
   const {
@@ -51,17 +50,15 @@ const ClaimButton: React.FC<ClaimButtonProps> = ({
     isLoading: isClaiming,
     write,
   } = useContractWrite({
-    
     addressOrName: process.env.NEXT_PUBLIC_CONTRACT_CLAIM || "",
     contractInterface: claimAirdropABI,
-    functionName:"claim", 
+    functionName: "claim",
     args: [
       account,
       utils.parseUnits(BigNumber.from(total).toString(), "18"),
       proof,
     ],
-    }
-  );
+  });
 
   const { isLoading: isWaitingTx } = useWaitForTransaction({
     hash: claimTx?.hash,

@@ -22,12 +22,8 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
     pendingConnector,
   } = useConnect();
   const { address, connector } = useAccount();
-  const { chain } = useNetwork()
-  const {
-    chains,
-    error: networkError,
-    switchNetwork,
-  } = useSwitchNetwork();
+  const { chain } = useNetwork();
+  const { chains, error: networkError, switchNetwork } = useSwitchNetwork();
 
   const account = address;
   const isUnsupportedNetwork = !!chain?.unsupported;
@@ -89,7 +85,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
               {injectedConnector?.ready && (
                 <button
                   className={metaMaskClasses}
-                  onClick={() => connect( { connector : injectedConnector} )}
+                  onClick={() => connect({ connector: injectedConnector })}
                 >
                   MetaMask
                 </button>
@@ -110,7 +106,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
             <div className={styles.connect_btn_wrapper}>
               <button
                 className={walletConnectClasses}
-                onClick={() => connect({connector : walletConnectConnector})}
+                onClick={() => connect({ connector: walletConnectConnector })}
               >
                 WalletConnect
               </button>
