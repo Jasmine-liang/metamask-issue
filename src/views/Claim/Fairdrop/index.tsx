@@ -9,10 +9,10 @@ export interface FairdropProps {
 }
 
 const Fairdrop: React.FC<FairdropProps> = ({ back }) => {
-  const { data: accountData } = useAccount();
-  const { activeChain } = useNetwork();
-  const account = accountData?.address;
-  const isUnsupportedNetwork = activeChain?.unsupported;
+  const { address } = useAccount();
+  const { chain } = useNetwork();
+  const account = address;
+  const isUnsupportedNetwork = chain?.unsupported;
 
   const [resultStatus, setResultStatus] = useState<ResultStatus>("");
 

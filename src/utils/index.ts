@@ -1,4 +1,4 @@
-export * from "./fetch";
+ export * from "./fetch";
 export * from "./wallet";
 export * from "./airdrop";
 export * from "./fairdrop";

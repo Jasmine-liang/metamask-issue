@@ -62,8 +62,8 @@ const getAPIErrorMessage = (code: string) => {
 
 const Steps: React.FC<StepsProps> = ({ setResultStatus }) => {
   const { disconnect } = useDisconnect();
-  const { data: accountData } = useAccount();
-  const account = accountData?.address;
+  const { address } = useAccount();
+  const account = address;
   const {
     data: balanceData,
     error: balanceError,
@@ -100,9 +100,9 @@ const Steps: React.FC<StepsProps> = ({ setResultStatus }) => {
     {
       addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
       contractInterface: fairdropABI,
-    },
-    "addressClaimed",
-    { args: account }
+    functionName: "addressClaimed",
+    args: account
+  }
   );
 
   // Check if userId (Twitter account) is already claimed
@@ -110,9 +110,8 @@ const Steps: React.FC<StepsProps> = ({ setResultStatus }) => {
     {
       addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
       contractInterface: fairdropABI,
-    },
-    "userIdClaimed",
-    { args: claimData?.userId }
+      functionName:"userIdClaimed",
+     args: claimData?.userId }
   );
 
   // Claim fairdrop
@@ -125,9 +124,8 @@ const Steps: React.FC<StepsProps> = ({ setResultStatus }) => {
   } = useContractWrite(
     {
       addressOrName: process.env.NEXT_PUBLIC_FAIRDROP_CONTRACT || "",
-      contractInterface: fairdropABI,
-    },
-    "claim"
+      contractInterface: fairdropABI, 
+      functionName:"claim"}
   );
 
   // wait claimging transaction

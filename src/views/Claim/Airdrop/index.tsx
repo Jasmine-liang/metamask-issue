@@ -26,11 +26,11 @@ export interface AirdropProps {
 }
 
 const Airdrop: React.FC<AirdropProps> = ({ back }) => {
-  const { data: accountData } = useAccount();
-  const { activeChain } = useNetwork();
+  const { address } = useAccount();
+  const { chain } = useNetwork();
   const { disconnect } = useDisconnect();
-  const account = accountData?.address;
-  const isUnsupportedNetwork = activeChain?.unsupported;
+  const account = address;
+  const isUnsupportedNetwork = chain?.unsupported;
 
   const [isStarted, setIsStarted] = useState(false);
   const { days, hours, minutes, seconds } = useCountdown({

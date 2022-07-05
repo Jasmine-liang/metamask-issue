@@ -26,8 +26,8 @@ const ClaimButton: React.FC<ClaimButtonProps> = ({
   const [isClaimed, setIsClaimed] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const { data: accountData } = useAccount();
-  const account = accountData?.address;
+  const { address } = useAccount();
+  const account = address;
 
   // read hasClaimed from contract
   const {
@@ -35,13 +35,13 @@ const ClaimButton: React.FC<ClaimButtonProps> = ({
     error,
     isLoading,
     refetch,
-  } = useContractRead(
-    {
-      addressOrName: process.env.NEXT_PUBLIC_CONTRACT_CLAIM || "",
-      contractInterface: claimAirdropABI,
-    },
-    "hasClaimed",
-    { enabled: false, args: [account] }
+  } = useContractRead({
+    
+    addressOrName: process.env.NEXT_PUBLIC_CONTRACT_CLAIM || "",
+    contractInterface: claimAirdropABI,
+    functionName:"hasClaimed",
+    enabled: false, 
+    args: [account] }
   );
 
   // claim from contract
@@ -50,18 +50,16 @@ const ClaimButton: React.FC<ClaimButtonProps> = ({
     error: claimError,
     isLoading: isClaiming,
     write,
-  } = useContractWrite(
-    {
-      addressOrName: process.env.NEXT_PUBLIC_CONTRACT_CLAIM || "",
-      contractInterface: claimAirdropABI,
-    },
-    "claim",
-    {
-      args: [
-        account,
-        utils.parseUnits(BigNumber.from(total).toString(), "18"),
-        proof,
-      ],
+  } = useContractWrite({
+    
+    addressOrName: process.env.NEXT_PUBLIC_CONTRACT_CLAIM || "",
+    contractInterface: claimAirdropABI,
+    functionName:"claim", 
+    args: [
+      account,
+      utils.parseUnits(BigNumber.from(total).toString(), "18"),
+      proof,
+    ],
     }
   );
 

@@ -56,7 +56,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.0.0",
     "twitter-api-sdk": "^1.0.7",
-    "wagmi": "0.5.5"
+    "wagmi": "^0.5.5"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",

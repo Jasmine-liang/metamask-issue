@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useConnect, useAccount, useNetwork } from "wagmi";
+import { useConnect, useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import classNames from "classnames";
 
 import { injectedConnector, walletConnectConnector } from "~/utils";
@@ -15,22 +15,22 @@ const amountPerAddress =
 
 const Entrance: React.FC<EntranceProps> = ({ next }) => {
   const {
-    activeConnector,
+    connectors,
     connect,
     error: connectError,
-    isConnecting,
+    isLoading,
     pendingConnector,
   } = useConnect();
-  const { data: accountData } = useAccount();
+  const { address, connector } = useAccount();
+  const { chain } = useNetwork()
   const {
-    activeChain,
     chains,
     error: networkError,
     switchNetwork,
-  } = useNetwork();
+  } = useSwitchNetwork();
 
-  const account = accountData?.address;
-  const isUnsupportedNetwork = !!activeChain?.unsupported;
+  const account = address;
+  const isUnsupportedNetwork = !!chain?.unsupported;
   const targetChainName = chains[0]?.name;
   const targetChainId = chains[0]?.id;
   const errorMessage = connectError?.message || networkError?.message;
@@ -55,18 +55,17 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
     [styles.metamask]: true,
     [styles.disabled]: isUnsupportedNetwork,
     [styles.connecting]:
-      isConnecting && pendingConnector?.id === injectedConnector.id,
-    [styles.active]: activeConnector?.id === injectedConnector.id,
+      isLoading && pendingConnector?.id === injectedConnector.id,
+    [styles.active]: connectors[0]?.id === injectedConnector.id,
   });
   const walletConnectClasses = classNames({
     [styles.connect_btn]: true,
     [styles.walletconnect]: true,
     [styles.disabled]: isUnsupportedNetwork,
     [styles.connecting]:
-      isConnecting && pendingConnector?.id === walletConnectConnector.id,
-    [styles.active]: activeConnector?.id === walletConnectConnector.id,
+      isLoading && pendingConnector?.id === walletConnectConnector.id,
+    [styles.active]: connectors[0]?.id === walletConnectConnector.id,
   });
-
   return (
     <>
       <section className={`${styles.entrance} text-center`}>
@@ -90,14 +89,14 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
               {injectedConnector?.ready && (
                 <button
                   className={metaMaskClasses}
-                  onClick={() => connect(injectedConnector)}
+                  onClick={() => connect( { connector : injectedConnector} )}
                 >
                   MetaMask
                 </button>
               )}
 
               {isUnsupportedNetwork &&
-                activeConnector?.id === injectedConnector.id && (
+                connectors[0]?.id === injectedConnector.id && (
                   <span
                     className={styles.switch_nwtwork}
                     role="button"
@@ -111,13 +110,13 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
             <div className={styles.connect_btn_wrapper}>
               <button
                 className={walletConnectClasses}
-                onClick={() => connect(walletConnectConnector)}
+                onClick={() => connect({connector : walletConnectConnector})}
               >
                 WalletConnect
               </button>
 
               {isUnsupportedNetwork &&
-                activeConnector?.id === walletConnectConnector.id && (
+                connectors[0]?.id === walletConnectConnector.id && (
                   <span
                     className={styles.switch_nwtwork}
                     role="button"
