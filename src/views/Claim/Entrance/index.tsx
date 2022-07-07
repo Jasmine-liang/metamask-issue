@@ -32,8 +32,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
   const errorMessage = connectError?.message || networkError?.message;
 
   const switchToTargetNetwork = async () => {
-    if (!switchNetwork) 
-      return;
+    if (!switchNetwork) return;
     switchNetwork(targetChainId);
   };
 
