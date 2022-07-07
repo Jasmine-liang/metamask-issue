@@ -32,7 +32,9 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
   const errorMessage = connectError?.message || networkError?.message;
 
   const switchToTargetNetwork = async () => {
-    if (!switchNetwork) return;
+    if (!switchNetwork) {
+      alert("switchingNetwork doesn't exist!")
+      return};
 
     switchNetwork(targetChainId);
   };
@@ -45,7 +47,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
 
     next();
   }, [account, isUnsupportedNetwork]);
-
+  
   const metaMaskClasses = classNames({
     [styles.connect_btn]: true,
     [styles.metamask]: true,
@@ -60,7 +62,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
     [styles.disabled]: isUnsupportedNetwork,
     [styles.connecting]:
       isLoading && pendingConnector?.id === walletConnectConnector.id,
-    [styles.active]: connectors[0]?.id === walletConnectConnector.id,
+    [styles.active]: connectors[1]?.id === walletConnectConnector.id,
   });
   return (
     <>
@@ -112,7 +114,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
               </button>
 
               {isUnsupportedNetwork &&
-                connectors[0]?.id === walletConnectConnector.id && (
+                connectors[1]?.id === walletConnectConnector.id && (
                   <span
                     className={styles.switch_nwtwork}
                     role="button"
