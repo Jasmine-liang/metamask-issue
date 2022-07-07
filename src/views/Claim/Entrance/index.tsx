@@ -32,10 +32,8 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
   const errorMessage = connectError?.message || networkError?.message;
 
   const switchToTargetNetwork = async () => {
-    if (!switchNetwork) {
-      alert("switchingNetwork doesn't exist!")
-      return};
-
+    if (!switchNetwork) 
+      return;
     switchNetwork(targetChainId);
   };
 
@@ -47,7 +45,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
 
     next();
   }, [account, isUnsupportedNetwork]);
-  
+
   const metaMaskClasses = classNames({
     [styles.connect_btn]: true,
     [styles.metamask]: true,
