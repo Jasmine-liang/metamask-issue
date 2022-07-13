@@ -21,7 +21,7 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
     isLoading,
     pendingConnector,
   } = useConnect();
-  const { address, connector } = useAccount();
+  const { address } = useAccount();
   const { chain } = useNetwork();
   const { chains, error: networkError, switchNetwork } = useSwitchNetwork();
 
@@ -33,8 +33,9 @@ const Entrance: React.FC<EntranceProps> = ({ next }) => {
 
   const switchToTargetNetwork = async () => {
     if (!switchNetwork) {
-      console.log("so weird!!")
-      return};
+      console.log("so weird!!");
+      return;
+    }
     switchNetwork(targetChainId);
   };
 
